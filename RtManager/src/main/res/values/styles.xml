@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Transparent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+    <style name="dialog_soft_input" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowSoftInputMode">stateVisible|adjustPan</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+</resources>
