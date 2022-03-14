@@ -1,4 +1,4 @@
-package cn.rubintry.rtmanager
+package cn.rubintry.rtmanager.core
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -7,26 +7,28 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.room.Room
+import cn.rubintry.rtmanager.R
 import cn.rubintry.rtmanager.db.RuntimeDatabase
 import com.blankj.utilcode.util.SizeUtils
 
 class RtViewManager private constructor(){
 
     val db : RuntimeDatabase by lazy {
-        Room.databaseBuilder(RuntimeEnv.requireApp(),
+        Room.databaseBuilder(
+            RuntimeEnv.requireApp(),
             RuntimeDatabase::class.java,
             "runtime-database")
+                //允许在主线程上查询
             .allowMainThreadQueries()
-            .addMigrations()
             .build()
     }
 
     companion object{
         @Volatile
-        private var instance : RtViewManager ?= null
+        private var instance : RtViewManager?= null
 
         @JvmStatic
-        fun getInstance(): RtViewManager{
+        fun getInstance(): RtViewManager {
             if(null == instance){
                 synchronized(RtViewManager::class.java){
                     if(null == instance){
@@ -54,13 +56,6 @@ class RtViewManager private constructor(){
         }
     }
 
-    fun stopMainIcon(activity: Activity) {
-        val mainIconView = activity.findViewById<MainIconView>(R.id.runtime_contentview_id)
-        mainIconView?.let {
-            RuntimeSPUtils.putInt(SharedPreferencesKey.FLOAT_POS_TOP , it.top)
-            RuntimeSPUtils.putInt(SharedPreferencesKey.FLOAT_POS_LEFT , it.left)
-        }
-    }
 
 
     fun resumeMainIcon(activity: Activity) {
@@ -68,10 +63,17 @@ class RtViewManager private constructor(){
             return
         }
         val mainIconView = activity.findViewById<MainIconView>(R.id.runtime_contentview_id)
-        val left = RuntimeSPUtils.getInt(SharedPreferencesKey.FLOAT_POS_LEFT , 0)
-        val top = RuntimeSPUtils.getInt(SharedPreferencesKey.FLOAT_POS_TOP , 0)
-        ViewCompat.offsetTopAndBottom(mainIconView , top)
-        ViewCompat.offsetLeftAndRight(mainIconView , left)
+        val iconPosList = db.iconPositionDao().getAll()
+        if(iconPosList.isNotEmpty()){
+            val iconPos = iconPosList.first()
+            val parent = mainIconView.parent
+            if(null != parent && parent is ViewGroup){
+                mainIconView.left = iconPos.left - 1
+                mainIconView.top = iconPos.top - 1
+                ViewDragProxy.getInstance().smoothSlideViewTo(parent , iconPos.left , iconPos.top)
+            }
+        }
+
     }
 
     private fun getDecorView(activity: Activity) : ViewGroup{

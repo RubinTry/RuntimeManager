@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleShadowImageView">
+        <attr name="android:src" format="reference" />
+        <attr name="radius" format="dimension" />
+        <attr name="dx" format="dimension" />
+        <attr name="dy" format="dimension" />
+        <attr name="shadowColor" format="color" />
+    </declare-styleable>
+</resources>

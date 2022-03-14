@@ -1,4 +1,4 @@
-package cn.rubintry.rtmanager
+package cn.rubintry.rtmanager.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

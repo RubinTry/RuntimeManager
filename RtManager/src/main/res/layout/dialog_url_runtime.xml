@@ -5,8 +5,9 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_select_runtime"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:text="选择环境"
         android:textSize="16sp"
         android:textColor="@color/c_222222"

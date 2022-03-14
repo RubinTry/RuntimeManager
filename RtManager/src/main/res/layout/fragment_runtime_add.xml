@@ -27,7 +27,7 @@
         android:layout_marginVertical="5dp"
         android:layout_marginHorizontal="20dp"
         android:background="@null"
-        android:hint="请输入主机地址或域名"
+        android:hint="请输入主机地址或域名（如：https://192.168.1.1:8088/）"
         android:textSize="14sp"
         android:gravity="center"
         android:textColor="@color/c_666666"/>

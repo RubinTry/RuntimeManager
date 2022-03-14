@@ -1,4 +1,4 @@
-package cn.rubintry.rtmanager
+package cn.rubintry.rtmanager.core
 
 import android.graphics.Rect
 import android.view.View

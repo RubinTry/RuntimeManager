@@ -4,23 +4,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import cn.rubintry.rtmanager.CustomRuntimeInfo
-import cn.rubintry.rtmanager.R
-import cn.rubintry.rtmanager.RtViewManager
+import cn.rubintry.rtmanager.*
+import cn.rubintry.rtmanager.callback.RuntimeAddCallback
+import cn.rubintry.rtmanager.core.RtViewManager
+import cn.rubintry.rtmanager.db.CustomRuntimeInfo
 import cn.rubintry.rtmanager.showToast
-import com.blankj.utilcode.util.BusUtils
 
 class RuntimeAddFragment : BaseFragment(), View.OnClickListener {
 
     private lateinit var edtRuntimePrincipal: EditText
     private lateinit var edtHostName: EditText
     private lateinit var tvConfirmRuntime: TextView
+    private var callback: RuntimeAddCallback ?= null
 
     companion object{
         @JvmStatic
-        fun newInstance(): RuntimeAddFragment {
+        fun newInstance(callback: RuntimeAddCallback): RuntimeAddFragment {
             val fragment = RuntimeAddFragment()
             val argument = Bundle()
+            argument.putSerializable(BundleKey.RUNTIME_ADD_CALLBACK , callback)
             fragment.arguments = argument
             return fragment
         }
@@ -35,6 +37,11 @@ class RuntimeAddFragment : BaseFragment(), View.OnClickListener {
         edtHostName = mRootView?.findViewById(R.id.edt_host_name)!!
         tvConfirmRuntime = mRootView?.findViewById(R.id.tv_confirm_runtime)!!
         tvConfirmRuntime.setOnClickListener(this)
+        callback = arguments?.getSerializable(BundleKey.RUNTIME_ADD_CALLBACK) as? RuntimeAddCallback
+    }
+
+    override fun initData() {
+
     }
 
     override fun onClick(v: View?) {
@@ -66,7 +73,7 @@ class RuntimeAddFragment : BaseFragment(), View.OnClickListener {
                     customRuntimeInfo = CustomRuntimeInfo(host = url , principal = principal)
                     db.customDao().insert(customRuntimeInfo)
                 }
-                BusUtils.post("RUNTIME_ADD" , customRuntimeInfo)
+                callback?.onAdd(customRuntimeInfo)
             }
         }
     }

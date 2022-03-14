@@ -1,4 +1,4 @@
-package cn.rubintry.rtmanager
+package cn.rubintry.rtmanager.core
 
 
 /**

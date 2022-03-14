@@ -1,13 +1,9 @@
-package cn.rubintry.rtmanager
+package cn.rubintry.rtmanager.core
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.view.ViewGroup
-import androidx.core.view.children
-import java.lang.ref.WeakReference
+import cn.rubintry.rtmanager.sp.RuntimeSPUtils
+import cn.rubintry.rtmanager.sp.SharedPreferencesKey
 
 
 object RuntimeManager{
@@ -18,6 +14,11 @@ object RuntimeManager{
             RuntimeEnv.app = context
         }
         return RuntimeBuilder(context)
+    }
+
+    @JvmStatic
+    fun getCurrentRuntime() : String{
+        return RuntimeSPUtils.getString(SharedPreferencesKey.SELECTED_RUNTIME)
     }
 }
 

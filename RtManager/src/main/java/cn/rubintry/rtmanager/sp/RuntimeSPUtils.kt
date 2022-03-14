@@ -1,7 +1,8 @@
-package cn.rubintry.rtmanager
+package cn.rubintry.rtmanager.sp
 
 import android.content.Context
 import android.content.SharedPreferences
+import cn.rubintry.rtmanager.core.RuntimeEnv
 
 object RuntimeSPUtils {
 
@@ -18,6 +19,15 @@ object RuntimeSPUtils {
     }
 
 
+    @JvmStatic
+    fun putString(key: String , value: String){
+        getSp().edit().putString(key , value).apply()
+    }
+
+    @JvmStatic
+    fun getString(key: String): String{
+        return getSp().getString(key , "").toString()
+    }
 
     private fun getSp() : SharedPreferences{
         return RuntimeEnv.requireApp().getSharedPreferences(SP_NAME , Context.MODE_PRIVATE)

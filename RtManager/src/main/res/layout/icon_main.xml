@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/img_main_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/icon_tools" />
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:radius="25dp"
+        app:shadowColor="@color/c_f2f2f2"/>
 </FrameLayout>

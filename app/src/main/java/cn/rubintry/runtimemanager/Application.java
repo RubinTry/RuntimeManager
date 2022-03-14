@@ -5,7 +5,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import cn.rubintry.rtmanager.OnRuntimeChangeListener;
-import cn.rubintry.rtmanager.RuntimeManager;
+import cn.rubintry.rtmanager.core.RuntimeManager;
 import cn.rubintry.rtmanager.RuntimeType;
 
 public class Application extends android.app.Application {

@@ -11,6 +11,8 @@ abstract class BaseFragment : Fragment(){
 
     protected var mRootView : View ?= null
 
+    var type = FragmentType.PREVIEW_LIST
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -18,6 +20,7 @@ abstract class BaseFragment : Fragment(){
     ): View? {
         mRootView = inflater.inflate(setLayout() , container , false)
         initViews()
+        initData()
         return mRootView
     }
 
@@ -25,4 +28,6 @@ abstract class BaseFragment : Fragment(){
     abstract fun setLayout() : Int
 
     abstract fun initViews()
+
+    abstract fun initData()
 }
