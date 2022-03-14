@@ -16,6 +16,12 @@ object RuntimeManager{
         return RuntimeBuilder(context)
     }
 
+
+    /**
+     * 获取当前环境地址
+     *
+     * @return
+     */
     @JvmStatic
     fun getCurrentRuntime() : String{
         return RuntimeSPUtils.getString(SharedPreferencesKey.SELECTED_RUNTIME)

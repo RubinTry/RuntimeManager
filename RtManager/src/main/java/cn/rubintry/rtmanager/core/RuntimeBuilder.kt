@@ -2,12 +2,14 @@ package cn.rubintry.rtmanager.core
 
 import android.app.Application
 import android.content.Context
-import cn.rubintry.rtmanager.OnRuntimeChangeListener
+import cn.rubintry.rtmanager.BuildConfig
+import cn.rubintry.rtmanager.callback.OnRuntimeChangeListener
 import cn.rubintry.rtmanager.callback.RuntimeLifecycleCallback
 import java.lang.ref.WeakReference
 
 class RuntimeBuilder(context: Context) {
 
+    var mDebugOnly: Boolean = false
     private val contextWeak = WeakReference(context)
 
     var onRuntimeChangeListener : OnRuntimeChangeListener?= null
@@ -34,7 +36,18 @@ class RuntimeBuilder(context: Context) {
 
     fun install(){
         //注册activity生命周期回调
-        registerActivityLifecycleCallback()
+        if(mDebugOnly){
+            if(BuildConfig.DEBUG){
+                registerActivityLifecycleCallback()
+            }
+        }else{
+            registerActivityLifecycleCallback()
+        }
+    }
+
+    fun debugOnly(): RuntimeBuilder {
+        this.mDebugOnly = true
+        return this
     }
 
 
@@ -51,5 +64,7 @@ class RuntimeBuilder(context: Context) {
         }
 
     }
+
+
 
 }

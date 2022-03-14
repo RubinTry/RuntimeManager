@@ -1,12 +1,9 @@
 package cn.rubintry.runtimemanager;
 
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import cn.rubintry.rtmanager.OnRuntimeChangeListener;
+import cn.rubintry.rtmanager.callback.OnRuntimeChangeListener;
 import cn.rubintry.rtmanager.core.RuntimeManager;
-import cn.rubintry.rtmanager.RuntimeType;
+import cn.rubintry.rtmanager.core.RuntimeType;
 
 public class Application extends android.app.Application {
 
@@ -18,7 +15,7 @@ public class Application extends android.app.Application {
                 .addTestUrl("http://test.cn/")
                 .addRuntimeChangeListener(new OnRuntimeChangeListener() {
                     @Override
-                    public void onChange(@NonNull String newHost, @NonNull RuntimeType runtimeType) {
+                    public void onChange(String newHost, RuntimeType runtimeType) {
                         if(runtimeType == RuntimeType.CUSTOM){
                             Toast.makeText(Application.this  , "已切换到自定义环境", Toast.LENGTH_SHORT).show();
                         }else if(runtimeType == RuntimeType.PRODUCT){
@@ -28,6 +25,7 @@ public class Application extends android.app.Application {
                         }
                     }
                 })
+                .debugOnly()
                 .install();
     }
 }
