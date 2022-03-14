@@ -14,8 +14,8 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         RuntimeManager.with(this)
-                .addProductUrl("https://baidu.com/")
-                .addTestUrl("http://weacar.com/")
+                .addProductUrl("https://product.cn/")
+                .addTestUrl("http://test.cn/")
                 .addRuntimeChangeListener(new OnRuntimeChangeListener() {
                     @Override
                     public void onChange(@NonNull String newHost, @NonNull RuntimeType runtimeType) {

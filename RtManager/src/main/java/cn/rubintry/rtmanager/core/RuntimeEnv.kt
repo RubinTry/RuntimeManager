@@ -9,6 +9,6 @@ object RuntimeEnv {
 
     @JvmStatic
     fun requireApp(): Application {
-        return app ?: throw IllegalArgumentException("Runtime context not set")
+        return app ?: throw IllegalArgumentException("Runtime context not set!!!")
     }
 }

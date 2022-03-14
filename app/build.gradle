@@ -29,6 +29,25 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    signingConfigs {
+        releaseConfig {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            storeFile file('rtmanager.jks')
+            storePassword "123456"
+            keyAlias "rtmanager"
+            keyPassword "123456"
+        }
+        deBugConfig {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            storeFile file('rtmanager.jks')
+            storePassword "123456"
+            keyAlias "rtmanager"
+            keyPassword "123456"
+        }
+    }
 }
 
 dependencies {
@@ -41,4 +60,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
 }

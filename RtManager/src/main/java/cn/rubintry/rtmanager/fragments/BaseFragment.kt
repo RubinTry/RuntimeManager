@@ -24,7 +24,7 @@ abstract class BaseFragment : Fragment(){
         return mRootView
     }
 
-    @LayoutRes
+
     abstract fun setLayout() : Int
 
     abstract fun initViews()

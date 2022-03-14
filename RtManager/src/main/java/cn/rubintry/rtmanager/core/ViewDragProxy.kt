@@ -16,8 +16,14 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ScreenUtils
 
 
+/**
+ * 触摸事件代理
+ *
+ */
 internal class ViewDragProxy private constructor(){
 
+    private var lastX: Float = 0f
+    private var lastY: Float = 0f
     private val helperMap = ArrayMap<View , ViewDragHelper>()
 
     private var downTime = 0L
@@ -38,6 +44,15 @@ internal class ViewDragProxy private constructor(){
         }
     }
 
+
+    /**
+     * 代理掉悬浮窗的触摸事件
+     *
+     * @param view
+     * @param ev
+     * @param runtimeBuilder
+     * @return
+     */
     fun proxyDrag(view: ViewGroup, ev: MotionEvent, runtimeBuilder: RuntimeBuilder): Boolean {
         var helper = helperMap[view]
         val mainIconView = view.findViewById<MainIconView>(R.id.runtime_contentview_id)
@@ -50,12 +65,14 @@ internal class ViewDragProxy private constructor(){
         if(mainIconView.visibleRect.contains(ev.x.toInt() , ev.y.toInt())){
             when(ev.action){
                 MotionEvent.ACTION_DOWN -> {
+                    lastX = ev.x
+                    lastY = ev.y
                     downTime = System.currentTimeMillis()
                 }
 
                 MotionEvent.ACTION_UP -> {
                     //按下松开的时间间隔小于200毫秒时，视为点击，其他情况依旧拖拽
-                    if(System.currentTimeMillis() - downTime < 200) {
+                    if(System.currentTimeMillis() - downTime < 200 && ev.y == lastY && ev.x == lastX) {
                         dealClick(mainIconView , runtimeBuilder)
                         return false
                     }
@@ -67,6 +84,13 @@ internal class ViewDragProxy private constructor(){
     }
 
 
+    /**
+     * 恢复到上一次的位置
+     *
+     * @param view
+     * @param left
+     * @param top
+     */
     fun smoothSlideViewTo(view: ViewGroup , left: Int , top: Int){
         var helper = helperMap[view]
         val mainIconView = view.findViewById<MainIconView>(R.id.runtime_contentview_id)
@@ -77,6 +101,14 @@ internal class ViewDragProxy private constructor(){
         forceSettleCapturedViewAt(helper , mainIconView , left , top)
     }
 
+    /**
+     * 滚动到上次的位置
+     *
+     * @param helper
+     * @param mCapturedView
+     * @param finalLeft
+     * @param finalTop
+     */
     private fun forceSettleCapturedViewAt(helper : ViewDragHelper , mCapturedView: View , finalLeft: Int, finalTop: Int) {
         val startLeft: Int = mCapturedView.left
         val startTop: Int = mCapturedView.top
@@ -109,7 +141,13 @@ internal class ViewDragProxy private constructor(){
     }
 
 
-
+    /**
+     * 获得一个ViewDragHelper
+     *
+     * @param view
+     * @param childView
+     * @return
+     */
     private fun obtainHelper(view: ViewGroup , childView: View): ViewDragHelper {
 
         val viewDragHelper = ViewDragHelper.create(view , object : ViewDragHelper.Callback(){
